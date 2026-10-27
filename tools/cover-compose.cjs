@@ -12,10 +12,10 @@ const pages = {
     <div class="card">${['desk-hero', 'desk-tag', 'desk-merge', 'desk-claims', 'desk-said', 'desk-finder-crop', 'desk-buy'].map((n) => `<img src="${img(n)}">`).join('')}</div>` },
   // desktop and phone together
   devices: { w: 1920, h: 1200, html: `<style>${base} body{width:1920px;height:1200px;background:radial-gradient(120% 90% at 30% 20%,#f6efe4,#e6d5bd);position:relative;overflow:hidden}
-    .desk{position:absolute;left:80px;top:150px;width:1300px;border-radius:18px;overflow:hidden;box-shadow:0 40px 100px rgb(60 40 20/.28);background:#fff}
+    .desk{position:absolute;left:90px;top:167px;width:1320px;border-radius:18px;overflow:hidden;box-shadow:0 40px 100px rgb(60 40 20/.28);background:#fff}
     .desk .chrome{height:40px;background:#f3eee6;display:flex;align-items:center;gap:8px;padding:0 16px} .desk .chrome i{width:12px;height:12px;border-radius:50%;background:#d9cfc0}
-    .phone{position:absolute;right:96px;top:110px;width:420px;padding:14px;border-radius:64px;background:#16100a;box-shadow:0 50px 110px rgb(30 20 10/.45)}
-    .phone img{border-radius:52px}</style>
+    .phone{position:absolute;left:1450px;top:238px;width:380px;padding:12px;border-radius:58px;background:#16100a;box-shadow:0 50px 110px rgb(30 20 10/.45)}
+    .phone img{border-radius:47px}</style>
     <div class="desk"><div class="chrome"><i></i><i></i><i></i></div><img src="${img('desk-hero')}"></div>
     <div class="phone"><img src="${img('phone-hero')}"></div>` },
   // the dive, four moments
