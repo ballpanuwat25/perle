@@ -1,4 +1,14 @@
+import type { CSSProperties } from "react";
 import { DROP_OIL } from "@/lib/formulas";
+
+// How tall a word's last letter stands over the baseline, in Funnel Display 500 (fractions of the
+// font size): its % sits level with that letter's top.
+function lastLetterTop(word: string) {
+  const c = word.at(-1) ?? "";
+  if ("bdfhklt".includes(c)) return 0.703;   // ascender
+  if (/[A-Z0-9]/.test(c)) return 0.688;      // cap height
+  return 0.516;                              // x-height (round letters overshoot it a touch)
+}
 
 // The oil sea. The still shows at once (and stays if WebGL is missing); <Scene> brings it to life.
 export function Hero() {
@@ -17,7 +27,7 @@ export function Hero() {
       </div>
       {/* the cascade: each oil at its share of the formula */}
       {DROP_OIL.layers.map((l, i) => (
-        <p key={l.inci} className={`oil o${i + 1}`}>{l.name}<small>{l.share.toFixed(1)}%</small></p>
+        <p key={l.inci} className={`oil o${i + 1}`} style={{ "--top": lastLetterTop(l.name) } as CSSProperties}>{l.name}<small>{l.share.toFixed(1)}%</small></p>
       ))}
       <p className="hint">Tap the oil for another drop</p>
       <div className="stand"><span>{DROP_OIL.product} <span className="mono">{DROP_OIL.size} · {DROP_OIL.price}</span></span><a href="#">Where to buy</a></div>

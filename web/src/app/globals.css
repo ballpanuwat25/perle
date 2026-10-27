@@ -56,9 +56,9 @@ html.naming .bar .name { opacity: 0; }
 /* the cascade from C2: each oil at its share of the formula */
 .oil { position: absolute; z-index: 4; margin: 0; display: flex; align-items: baseline; gap: clamp(3px, 0.02em, 8px); white-space: nowrap; pointer-events: none; transform-origin: 0 0;
   font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); line-height: var(--d-lead); }
-/* the % tucks in after the last letter, its top level with the top of the e (x-height 0.5,
-   Geist Mono digits 0.734 of their size) */
-.oil small { font: 400 11px/1 var(--font-mono), ui-monospace, monospace; letter-spacing: 0; color: var(--soft); align-self: baseline; translate: 0 calc(0.734em - 0.5 * var(--fs)); }
+/* the % tucks in after the last letter, its top level with that letter's top (--top: its height
+   over the baseline, set per oil by <Hero>; Geist Mono digits stand 0.734 of their size) */
+.oil small { font: 400 11px/1 var(--font-mono), ui-monospace, monospace; letter-spacing: 0; color: var(--soft); align-self: baseline; translate: 0 calc(0.734em - var(--top, 0.516) * var(--fs)); }
 .o1 { left: 1.6%; top: 19%; --fs: calc(17vw * var(--d-scale) * 1.08); font-size: var(--fs); }
 .o2 { left: 19%; top: 45%; --fs: calc(17vw * 30 / 52); font-size: var(--fs); }
 .o3 { left: 46%; top: 63%; --fs: calc(17vw * 15 / 52); font-size: var(--fs); }
