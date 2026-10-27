@@ -56,12 +56,14 @@ html.naming .bar .name { opacity: 0; }
 /* the cascade from C2: each oil at its share of the formula */
 .oil { position: absolute; z-index: 4; margin: 0; display: flex; align-items: baseline; gap: clamp(3px, 0.02em, 8px); white-space: nowrap; pointer-events: none; transform-origin: 0 0;
   font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); line-height: var(--d-lead); }
-.oil small { font: 400 11px/1 var(--font-mono), ui-monospace, monospace; letter-spacing: 0; color: var(--soft); align-self: flex-start; margin-top: 0.1em; }
-.o1 { left: 1.6%; top: 19%; font-size: calc(17vw * var(--d-scale) * 1.08); }
-.o2 { left: 19%; top: 45%; font-size: calc(17vw * 30 / 52); }
-.o3 { left: 46%; top: 63%; font-size: calc(17vw * 15 / 52); }
-.o4 { left: 67%; top: 75.5%; font-size: max(20px, calc(17vw * 2.5 / 52)); }
-.o5 { left: 75%; top: 80.5%; font-size: max(15px, calc(17vw * 0.5 / 52)); }
+/* the % tucks in after the last letter, its top level with the top of the e (x-height 0.5,
+   Geist Mono digits 0.734 of their size) */
+.oil small { font: 400 11px/1 var(--font-mono), ui-monospace, monospace; letter-spacing: 0; color: var(--soft); align-self: baseline; translate: 0 calc(0.734em - 0.5 * var(--fs)); }
+.o1 { left: 1.6%; top: 19%; --fs: calc(17vw * var(--d-scale) * 1.08); font-size: var(--fs); }
+.o2 { left: 19%; top: 45%; --fs: calc(17vw * 30 / 52); font-size: var(--fs); }
+.o3 { left: 46%; top: 63%; --fs: calc(17vw * 15 / 52); font-size: var(--fs); }
+.o4 { left: 67%; top: 75.5%; --fs: max(20px, calc(17vw * 2.5 / 52)); font-size: var(--fs); }
+.o5 { left: 75%; top: 80.5%; --fs: max(15px, calc(17vw * 0.5 / 52)); font-size: var(--fs); }
 .o4 small, .o5 small { margin-left: 4px; }
 
 .stand { position: absolute; z-index: 5; right: clamp(16px, 3vw, 40px); bottom: 28px; display: flex; align-items: baseline; gap: 18px; font-size: 14px; cursor: auto; }
@@ -123,11 +125,11 @@ footer { padding: 64px clamp(16px, 3vw, 40px) 120px; font-size: 13px; color: var
   .say { left: 16px; right: 16px; top: 76px; display: block; }
   .say h1 { margin-bottom: 8px; }
   .say p { font-size: 13px; }
-  .o1 { left: 2%; top: 26%; font-size: calc(22vw * var(--d-scale) * 1.08); }
-  .o2 { left: 8%; top: 37%; font-size: calc(22vw * 30 / 52); }
-  .o3 { left: 26%; top: 45%; font-size: calc(22vw * 15 / 52); }
-  .o4 { left: 40%; top: 51.5%; font-size: 16px; }
-  .o5 { left: 52%; top: 55.5%; font-size: 13px; }
+  .o1 { left: 2%; top: 26%; --fs: calc(22vw * var(--d-scale) * 1.08); font-size: var(--fs); }
+  .o2 { left: 8%; top: 37%; --fs: calc(22vw * 30 / 52); font-size: var(--fs); }
+  .o3 { left: 26%; top: 45%; --fs: calc(22vw * 15 / 52); font-size: var(--fs); }
+  .o4 { left: 40%; top: 51.5%; --fs: 16px; font-size: var(--fs); }
+  .o5 { left: 52%; top: 55.5%; --fs: 13px; font-size: var(--fs); }
   .oil small { font-size: 9px; }
   .stand { left: 16px; right: 16px; bottom: 16px; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; }
   .stand > span { display: flex; flex-direction: column; gap: 3px; line-height: 1.2; }
