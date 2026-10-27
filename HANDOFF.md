@@ -13,7 +13,8 @@ The direction is chosen and the hero and dive are built as a **static page** in 
 
 `design/` is the local-only archive and is not in git: the exploration sketches a–c6 (c6 with its review toggles), the render caches and outputs, and the original copies of the scripts. Work in `site/`, `render/` and `tools/`.
 
-**Next step, agreed with the user: move to Next.js.** First carry the hero and dive over as they are, then build the remaining sections in React.
+**Moved to Next.js (2026-10-27).** The app is in `web/` (Next 16.4, App Router, TypeScript, plain CSS). The hero and the dive are carried over unchanged: the scene modules sit in `web/src/lib/` (`site/main.js` became `hero.js`, wrapped in `startHero()`), the markup is React components (`web/src/components/`), the styles are `web/src/app/globals.css`, fonts come from `next/font`, Lenis from npm, images from `web/public/img/`. Screenshots at 1920×950 and 390×844 match the static page frame for frame. `site/` stays as the reference until the user signs the port off; then delete it. **Next:** build the remaining sections in React, and redo the type layout and the bottom bar.
+Note: Next 16 has breaking changes; read `web/node_modules/next/dist/docs/` before using an API (see `web/AGENTS.md`).
 
 ### Built and approved (keep the behaviour when porting)
 1. **Intro.** The hero still is shown blurred, with `PERLE` centred over a hairline loader. Once the still and the fonts are in (min 0.7 s, max 2.5 s), the mark flies into the header logo. The flight is measured on the glyph boxes, so it lands exactly. The blur clears and the type cascades in. It plays on every load, but not with reduced motion. The classes are set in `<head>` before first paint.
@@ -53,6 +54,7 @@ The direction is chosen and the hero and dive are built as a **static page** in 
 - Ask before big creative forks (they answer quickly). Small fixes: just do them and show proof.
 
 ## Running it
+- **Next app:** `cd web && npm install && npm run dev` (port 3000), or `npm run build && npm start`. `?poster=1` works as before.
 - **Static preview:** `python tools/serve.py 4022 site` (it sends no-store headers, so edited ES modules never mix with cached ones). In the app this is the launch config `perle-site` in `D:/.claude/launch.json`. The archived sketches are served by `skincare-directions` on port 4021.
 - **Headless checks:** `node tools/play.mjs <url> <outDir> <w> <h> '<steps json>'`.
   - Steps: `wait`, `click`, `drag`, `wheel:[dy,n]`, `scrollTo`, `js`, `log` (prints an eval result), `shot`.
