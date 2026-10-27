@@ -53,6 +53,9 @@ Note: Next 16 has breaking changes; read `web/node_modules/next/dist/docs/` befo
 - **Liked:** the peach / rose-gold tone, Funnel Display, motion that feels physical and continuous, everything sharp. **Disliked:** CG-looking spheres, haze bands, anything that jumps, pops or "feels like a bug", text appearing faded or before the camera stops.
 - Ask before big creative forks (they answer quickly). Small fixes: just do them and show proof.
 
+## Portfolio covers
+`portfolio/` holds the covers, captured from the live site (2x) and laid out: `perle-hero.jpg` (2880×1800), `perle-strip.jpg` (the page top to bottom, 1440 wide), `perle-devices.jpg`, `perle-dive.jpg`, `perle-phones.jpg` (1920×1200). The link-share image is `web/src/app/opengraph-image.jpg`. Remake with `tools/cover-capture.cjs` + `tools/cover-compose.cjs`. Thin to rich and the footer are left out until the stills are rendered and site-by/contact are filled in.
+
 ## Running it
 - **Next app:** `cd web && npm install && npm run dev` (port 3000), or `npm run build && npm start`. `?poster=1` works as before.
 - **Static preview:** `python tools/serve.py 4022 site` (it sends no-store headers, so edited ES modules never mix with cached ones). In the app this is the launch config `perle-site` in `D:/.claude/launch.json`. The archived sketches are served by `skincare-directions` on port 4021.
