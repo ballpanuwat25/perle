@@ -1,5 +1,5 @@
 .footer { position: relative; z-index: 7; background: #16100a; color: #c9b9a2; padding: 0 clamp(16px, 3vw, 40px) 40px; font-size: 14px; }
-.mark { margin: 0; padding-top: 24px; border-top: 1px solid rgb(243 236 225 / 0.18); font-family: var(--display); font-weight: 600; letter-spacing: 0.32em; margin-right: -0.32em; font-size: clamp(56px, 16vw, 260px); line-height: 1; color: #f3ece1; }
+.mark { margin: 0; padding-top: 24px; border-top: 1px solid rgb(243 236 225 / 0.18); font-family: var(--display); font-weight: 600; letter-spacing: 0.32em; font-size: clamp(56px, 16vw, 260px); line-height: 1; color: #f3ece1; }
 .cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin: 48px 0 56px; }
 .cols h4 { margin: 0 0 14px; font-size: 11px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; color: #8f806a; }
 .cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; line-height: 1.45; }

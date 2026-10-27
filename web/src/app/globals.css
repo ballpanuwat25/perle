@@ -3,6 +3,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; }
+/* nothing may widen the page sideways (clip, not hidden, so the sticky hero and dive still stick) */
+body { overflow-x: clip; }
 body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 a { color: inherit; }
 img, canvas { display: block; }
@@ -74,7 +76,7 @@ html.naming .bar .name { opacity: 0; }
 /* the stage lies over the hero from the first pixel of scroll: it draws nothing above the
    surface line, and lets taps through to the sea */
 .dive { position: relative; z-index: 6; height: 480vh; margin-top: -100svh; pointer-events: none; }
-.dive-stage { position: sticky; top: 0; height: 100svh; }
+.dive-stage { position: sticky; top: 0; height: 100svh; overflow: clip; }   /* (tags and leads of oils far off camera stay out of the page's width) */
 .dive-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .leads { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .leads path { fill: none; stroke: var(--ink); stroke-width: 1; }
