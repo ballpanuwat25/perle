@@ -199,11 +199,15 @@ export function startHero() {
 
   let then = performance.now(), visible = true;
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(hero);
+  // (the dive overlaps the hero from the top, so it is out of view only once we are below it)
+  let diveShown = true;
+  new IntersectionObserver(([e]) => { diveShown = e.isIntersecting; }).observe(document.querySelector('#dive'));
   function frame(now) {
     requestAnimationFrame(frame);
     const dt = Math.min((now - then) / 1000, 0.05);
     then = now;
-    const { p = 0, sink = 0 } = dive ? dive.tick(dt) : {};
+    // past the dive (the sections below), nothing of it shows: don't draw it at all
+    const { p = 0, sink = 0 } = !diveShown ? { p: 1, sink: 1 } : dive ? dive.tick(dt) : {};
     if (p > 0) lastAway = now;   // (noted before anything returns early, however deep we are)
     if (sink >= 1 && !reduceMotion) return;   // (as a still, the dive sits below the sea, not over it)
     // the first stretch of scroll lets one drop fall from the dropper to the sea; the camera
