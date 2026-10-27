@@ -22,7 +22,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--font-sans
 .pool .still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; transition: opacity 0.6s; visibility: hidden; }
 .pool .still.placed { visibility: visible; }   /* shown once shifted to where the live sea will be */
 /* capturing that still: the bare sea only */
-html.poster .pool > :not(canvas), html.poster .dive, html.poster .buy, html.poster footer { visibility: hidden; }
+html.poster .pool > :not(canvas), html.poster .dive, html.poster main > :not(.sink), html.poster footer { visibility: hidden; }
 .pool canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 
 /* The intro: the sea blurred, PERLE in the middle over a hairline loader. Once the still and the
@@ -89,15 +89,6 @@ html.naming .bar .name { opacity: 0; }
 .dive-end p { margin: 0 0 18px; font-size: 13px; color: #4a3a26; }
 .dive-end .cta { display: inline-block; background: var(--ink); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-size: 14px; }
 
-/* after the dive: where to buy it, and how to know the store is ours */
-.buy { position: relative; z-index: 7; background: var(--paper); padding: clamp(72px, 12vh, 140px) clamp(16px, 3vw, 40px); }
-.buy h2 { margin: 0 0 14px; font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); font-size: clamp(36px, 5vw, 72px); line-height: 0.95; }
-.buy > p { margin: 0 0 40px; max-width: 34em; font-size: 15px; line-height: 1.55; color: var(--soft); }
-.shops { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); border-top: 1px solid rgb(28 20 10 / 0.15); }
-.shops a { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 22px 0; margin-right: 32px; border-bottom: 1px solid rgb(28 20 10 / 0.15); color: var(--ink); text-decoration: none; }
-.shops strong { font-family: var(--display); font-weight: 600; font-size: 22px; }
-.shops span { font: 400 12px/1.3 var(--font-mono), ui-monospace, monospace; color: var(--soft); }
-
 /* reduced motion: no sinking, no glide; the dive is one still frame after the sea */
 @media (prefers-reduced-motion: reduce) {
   .dive { margin-top: 0; height: 100svh; }
@@ -118,7 +109,6 @@ html.naming .bar .name { opacity: 0; }
 .dive.no-gl .tags { padding-top: 18vh; }
 .dive.no-gl .dive-end { opacity: 1; }
 
-footer { padding: 64px clamp(16px, 3vw, 40px) 120px; font-size: 13px; color: var(--soft); }
 
 @media (max-width: 760px) {
   .bar nav a:not(.buy) { display: none; }
@@ -137,3 +127,6 @@ footer { padding: 64px clamp(16px, 3vw, 40px) 120px; font-size: 13px; color: var
   .stand a { white-space: nowrap; }
   .hint { left: 16px; bottom: 70px; transform: none; white-space: nowrap; font-size: 11px; }
 }
+
+/* for screen readers only */
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

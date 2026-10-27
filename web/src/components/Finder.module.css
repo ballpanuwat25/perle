@@ -1,0 +1,28 @@
+.finder { position: relative; z-index: 7; background: var(--paper); padding: clamp(80px, 14vh, 160px) clamp(16px, 3vw, 40px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px clamp(24px, 5vw, 96px); align-items: start; }
+.head h2 { margin: 0 0 14px; font-family: var(--display); font-weight: var(--d-weight); letter-spacing: var(--d-track); font-size: clamp(44px, 7vw, 112px); line-height: 0.9; }
+.head p { margin: 0; max-width: 24em; font-size: 15px; line-height: 1.55; color: var(--soft); }
+
+.card { min-height: 340px; border-top: 1px solid rgb(28 20 10 / 0.15); padding-top: 28px; }
+.question { border: 0; margin: 0; padding: 0; min-width: 0; animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.question legend { padding: 0; margin-bottom: 28px; }
+.count { display: block; font-size: 12px; color: var(--soft); margin: 0 0 14px; }
+.ask { display: block; font-family: var(--display); font-weight: var(--d-weight); letter-spacing: -0.03em; font-size: clamp(28px, 3.2vw, 48px); line-height: 1.02; }
+.answers { display: flex; flex-wrap: wrap; gap: 10px; }
+.answers button { cursor: pointer; padding: 14px 22px; border-radius: 999px; border: 1px solid rgb(28 20 10 / 0.25); background: transparent; font-size: 16px; transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
+.answers button:hover, .answers button:focus-visible { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.back { cursor: pointer; margin-top: 24px; padding: 6px 0; border: 0; background: none; font-size: 14px; color: var(--soft); text-decoration: underline; text-underline-offset: 3px; }
+
+.result { animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.result ol { list-style: none; margin: 0 0 28px; padding: 0; }
+.result li { display: grid; grid-template-columns: 32px 1fr auto; gap: 16px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid rgb(28 20 10 / 0.12); }
+.n { font-size: 12px; color: var(--soft); }
+.name strong { display: block; font-family: var(--display); font-weight: var(--d-weight); letter-spacing: -0.03em; font-size: clamp(24px, 2.4vw, 34px); line-height: 1; margin-bottom: 6px; }
+.name span { font-size: 14px; color: var(--soft); }
+.price { font-size: 13px; }
+.actions { display: flex; align-items: center; gap: 24px; }
+.actions .back { margin: 0; }
+.actions a { background: var(--ink); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-size: 14px; }
+
+@keyframes rise { from { opacity: 0; translate: 0 12px; } }
+@media (prefers-reduced-motion: reduce) { .question, .result { animation: none; } }
+@media (max-width: 860px) { .finder { grid-template-columns: 1fr; } }

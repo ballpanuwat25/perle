@@ -1,0 +1,9 @@
+.missed { position: relative; height: 100svh; overflow: hidden; background: var(--paper); }
+.missed img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 50%; }
+.text { position: absolute; left: clamp(16px, 3vw, 40px); right: clamp(16px, 3vw, 40px); top: clamp(80px, 14vh, 140px); }
+.text .mono { margin: 0 0 12px; font-size: 12px; color: var(--soft); }
+.text h1 { margin: 0 0 12px; font-family: var(--display); font-weight: var(--d-weight); letter-spacing: var(--d-track); font-size: clamp(44px, 8vw, 128px); line-height: 0.9; }
+.text p:not(.mono) { margin: 0 0 24px; font-size: 15px; color: var(--soft); }
+.text nav { display: flex; gap: 10px; flex-wrap: wrap; }
+.text a { padding: 11px 20px; border-radius: 999px; text-decoration: none; font-size: 14px; border: 1px solid rgb(28 20 10 / 0.3); }
+.text a:first-child { background: var(--ink); color: var(--paper); border-color: var(--ink); }

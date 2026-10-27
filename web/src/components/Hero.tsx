@@ -20,7 +20,7 @@ export function Hero() {
       </picture>
       <canvas aria-label="A sea of golden oil. Tap it to let a drop fall." />
       <div className="intro" aria-hidden="true"><span className="intro-mark">PERLE</span><i className="intro-line"><b /></i></div>
-      <div className="bar"><span className="name">PERLE</span><nav><a href="#">Ingredients</a><a href="#">Find yours</a><a className="buy" href="#">Where to buy</a></nav></div>
+      <div className="bar"><span className="name">PERLE</span><nav><a href="#dive">Ingredients</a><a href="#finder">Find yours</a><a className="buy" href="#buy">Where to buy</a></nav></div>
       <div className="say">
         <h1>What’s in a drop.</h1>
         <p>Each oil is set at its share of the formula. Scroll to sink in and meet them one by one.</p>
@@ -30,7 +30,7 @@ export function Hero() {
         <p key={l.inci} className={`oil o${i + 1}`} style={{ "--top": lastLetterTop(l.name) } as CSSProperties}>{l.name}<small>{l.share.toFixed(1)}%</small></p>
       ))}
       <p className="hint">Tap the oil for another drop</p>
-      <div className="stand"><span>{DROP_OIL.product} <span className="mono">{DROP_OIL.size} · {DROP_OIL.price}</span></span><a href="#">Where to buy</a></div>
+      <div className="stand"><span>{DROP_OIL.product} <span className="mono">{DROP_OIL.size} · {DROP_OIL.price}</span></span><a href="#buy">Where to buy</a></div>
     </section>
   );
 }

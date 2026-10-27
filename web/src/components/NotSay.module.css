@@ -1,0 +1,33 @@
+/* dark: the oil line reads best on ink */
+.notsay { position: relative; z-index: 7; height: 320vh; background: #16100a; color: #f3ece1; --done: 0; }
+.stage { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 0 clamp(16px, 3vw, 40px); overflow: hidden; }
+.kicker { margin: 0 0 clamp(16px, 3vh, 32px); font-size: 12px; color: #b9a78c; text-transform: uppercase; letter-spacing: 0.08em; }
+
+.body { display: grid; align-items: center; }
+/* once all are struck, the list lifts away and what we do say takes its place */
+.claims, .say { grid-area: 1 / 1; }
+.claims { list-style: none; margin: 0; padding: 0; --k: 0; opacity: calc(1 - var(--done)); translate: 0 calc(var(--done) * -40px); }
+.claims li { position: relative; width: fit-content; font-family: var(--display); font-weight: var(--d-weight); letter-spacing: var(--d-track); font-size: clamp(40px, 8.4vw, 132px); line-height: 0.98; }
+.claims li span { opacity: calc(1 - var(--k) * 0.55); }
+/* the oil line: amber to pale gold with a bead at its running end */
+.claims li i { position: absolute; left: -0.06em; right: -0.06em; top: 52%; height: 0.075em; border-radius: 0.05em; transform-origin: 0 50%; transform: scaleX(var(--k));
+  background: linear-gradient(180deg, rgb(255 240 210 / 0.55), transparent 45%), linear-gradient(90deg, #a85a1c, #d9902f 45%, #f0c56f);
+  box-shadow: 0 0.02em 0.05em rgb(0 0 0 / 0.35); }
+.claims li i::after { content: ""; position: absolute; right: -0.04em; top: 50%; width: 0.15em; height: 0.15em; translate: 0 -50%; border-radius: 50%; transform: scaleX(calc(1 / max(var(--k), 0.001))); transform-origin: 100% 50%;
+  background: radial-gradient(circle at 35% 30%, #fff1d0 0 12%, #f0c56f 30%, #c27a2c 75%); opacity: calc(var(--k) * (1 - var(--k)) * 4); }
+
+.say { opacity: var(--done); translate: 0 calc((1 - var(--done)) * 40px); pointer-events: none; }
+.notsay[data-said] .say { pointer-events: auto; }
+.say h2 { margin: 0 0 12px; font-family: var(--display); font-weight: var(--d-weight); letter-spacing: var(--d-track); font-size: clamp(36px, 5vw, 76px); line-height: 0.95; color: #f6d9a8; }
+.say p { margin: 0 0 20px; max-width: 32em; font-size: 15px; line-height: 1.55; color: #d6c8b3; }
+.say a { display: inline-block; padding: 10px 18px; border-radius: 999px; border: 1px solid rgb(243 236 225 / 0.4); text-decoration: none; font-size: 14px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .notsay { height: auto; }
+  .stage { position: relative; height: auto; padding-top: 96px; padding-bottom: 96px; }
+  .body { display: block; }
+  .claims { opacity: 0.5; translate: none; }
+  .say { margin-top: 56px; }
+}
+/* on phones the longest claim ("Clinically proven") just fits the width */
+@media (max-width: 760px) { .claims li { font-size: 12.4vw; } }
