@@ -1,0 +1,9 @@
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { color: inherit; }
+img, canvas { display: block; }
+button { font: inherit; color: inherit; }
+
+/* the display face: Funnel Display */
+:root { --display: 'Funnel Display', system-ui, sans-serif; --d-weight: 500; --d-stretch: 100%; --d-track: -0.045em; --d-lead: 0.86; --d-scale: 0.78; }

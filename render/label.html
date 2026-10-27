@@ -1,0 +1,20 @@
+<!doctype html>
+<!-- The PERLE bottle label, drawn flat in the site's own fonts and screenshot at 1024 x 3072:
+     x runs along the bottle (36 mm), y around it (109 mm). turned 90° it becomes label.png. -->
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1024px; height: 3072px; background: #efe8dc; overflow: hidden; }
+  /* the face the camera sees is centred about 43% of the way round */
+  .face { position: absolute; left: 0; right: 0; top: 1321px; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; color: #1c140a; }
+  .name { font: 600 190px/1 'Funnel Display', sans-serif; letter-spacing: 0.2em; margin-right: -0.2em; }
+  .rule { width: 640px; height: 3px; background: #1c140a; opacity: 0.8; margin: 54px 0 40px; }
+  .what { font: 500 52px/1 'Geist Mono', monospace; letter-spacing: 0.24em; margin-right: -0.24em; }
+  .size { font: 400 40px/1 'Geist Mono', monospace; letter-spacing: 0.18em; margin-right: -0.18em; color: #5d4f3a; margin-top: 28px; }
+</style>
+<div class="face">
+  <div class="name">PERLE</div>
+  <div class="rule"></div>
+  <div class="what">DROP OIL</div>
+  <div class="size">30 ml · 1.0 fl oz</div>
+</div>

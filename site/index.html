@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PERLE — Drop Oil</title>
+<meta name="description" content="PERLE Drop Oil: five oils, one drop. A fictional skincare brand, built as a portfolio piece.">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/base.css">
+<!-- decide on the intro before the first paint, so the type never shows and then hides -->
+<script>try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !/[?&]poster/.test(location.search)) document.documentElement.classList.add('loading', 'naming'); } catch (e) {}</script>
+<style>
+  :root { --ink: #1c140a; --soft: #6a5a41; --paper: #f6f4f0; }
+  body { background: var(--paper); color: var(--ink); font-family: 'Geist', system-ui, sans-serif; }
+  .mono { font-family: 'Geist Mono', ui-monospace, monospace; }
+
+  /* the hero holds still while the dive section rises over it */
+  .sink { position: relative; }
+  .pool { position: sticky; top: 0; height: 100svh; overflow: hidden; background: var(--paper); user-select: none; -webkit-user-select: none; touch-action: pan-y; cursor: pointer; }
+  /* the Blender plate is the still: it shows at once and stays if WebGL is missing */
+  .pool .still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; transition: opacity 0.6s; visibility: hidden; }
+  .pool .still.placed { visibility: visible; }   /* shown once shifted to where the live sea will be */
+  /* capturing that still: the bare sea only */
+  html.poster .pool > :not(canvas), html.poster .dive, html.poster .buy, html.poster footer { visibility: hidden; }
+  .pool canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  /* The intro: the sea blurred, PERLE in the middle over a hairline loader. Once the still and the
+     fonts are in, the mark flies up into the header, the blur clears and the type comes in. */
+  /* (the sea only comes into focus: nothing in it moves, so nothing seems to settle) */
+  .pool .still, .pool canvas { transition: opacity 0.6s, filter 1.1s ease; }
+  html.loading .pool .still, html.loading .pool canvas { filter: blur(18px) saturate(0.92); }
+  .say, .oil, .bar nav, .stand { transition: opacity 0.7s ease, translate 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  html.loading .say, html.loading .oil, html.loading .bar nav, html.loading .stand, html.loading .hint { opacity: 0; translate: 0 22px; }
+  html.loading .bar, html.naming .bar .name { background-color: transparent; border-color: transparent; box-shadow: none; }
+  .bar { transition: background-color 0.6s, border-color 0.6s, box-shadow 0.6s; }
+  html.naming .bar .name { opacity: 0; }
+  .intro { position: absolute; inset: 0; z-index: 9; display: grid; place-items: center; pointer-events: none; }
+  .intro-mark { font-family: var(--display); font-weight: 600; letter-spacing: 0.32em; margin-right: -0.32em; font-size: clamp(44px, 7vw, 104px); line-height: 1; color: var(--ink); transform-origin: 0 0; transition: transform 0.95s cubic-bezier(0.65, 0, 0.2, 1); }
+  .intro-line { position: absolute; left: 50%; top: calc(50% + clamp(44px, 5.4vw, 80px)); width: clamp(120px, 14vw, 200px); height: 1px; translate: -50% 0; background: rgb(28 20 10 / 0.14); overflow: hidden; transition: opacity 0.3s; }
+  .intro-line b { display: block; height: 100%; background: var(--ink); transform-origin: 0 50%; transform: scaleX(0); transition: transform 1.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+  /* frosted glass: the dropper hangs up behind it, so the bulb blurs through */
+  .bar { position: absolute; z-index: 5; left: clamp(10px, 2vw, 28px); right: clamp(10px, 2vw, 28px); top: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; cursor: auto;
+    padding: 7px 7px 7px 22px; border-radius: 999px; background: rgb(255 253 249 / 0.32); border: 1px solid rgb(255 255 255 / 0.55);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 6px 24px rgb(60 40 20 / 0.08); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); }
+  .bar .name { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: 0.32em; }
+  .bar nav { display: flex; gap: 26px; align-items: center; }
+  .bar a { text-decoration: none; }
+  .bar .buy { background: var(--ink); color: var(--paper); border-radius: 999px; padding: 9px 17px; }
+
+  .say { position: absolute; z-index: 4; left: clamp(16px, 3vw, 40px); top: 9%; display: flex; align-items: baseline; gap: 28px; pointer-events: none; }
+  .say h1 { font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); font-size: 34px; line-height: 0.95; margin: 0; white-space: nowrap; }
+  .say p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--soft); max-width: 34em; }
+
+  /* the cascade from C2: each oil at its share of the formula */
+  .oil { position: absolute; z-index: 4; margin: 0; display: flex; align-items: baseline; gap: 0.12em; white-space: nowrap; pointer-events: none; transform-origin: 0 0;
+    font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); line-height: var(--d-lead); }
+  .oil small { font: 400 11px/1 'Geist Mono', monospace; letter-spacing: 0; color: var(--soft); align-self: flex-start; margin-top: 0.1em; }
+  .o1 { left: 1.6%; top: 19%; font-size: calc(17vw * var(--d-scale) * 1.08); }
+  .o2 { left: 19%; top: 45%; font-size: calc(17vw * 30 / 52); }
+  .o3 { left: 46%; top: 63%; font-size: calc(17vw * 15 / 52); }
+  .o4 { left: 67%; top: 75.5%; font-size: calc(17vw * 2.5 / 52); }
+  .o5 { left: 75%; top: 80.5%; font-size: max(3.5px, calc(17vw * 0.5 / 52)); }
+  .o4 small, .o5 small { margin-left: 6px; }
+
+  .stand { position: absolute; z-index: 5; right: clamp(16px, 3vw, 40px); bottom: 28px; display: flex; align-items: baseline; gap: 18px; font-size: 14px; cursor: auto; }
+  .stand a { background: var(--ink); color: var(--paper); padding: 10px 16px; text-decoration: none; border-radius: 999px; }
+  .hint { position: absolute; z-index: 4; left: 50%; bottom: 30px; transform: translateX(-50%); margin: 0; font: 400 12px/1 'Geist Mono', monospace; color: var(--soft); pointer-events: none; transition: opacity 0.4s; }
+
+  /* below the surface: the stage sticks while the five oils are walked through */
+  /* the stage lies over the hero from the first pixel of scroll: it draws nothing above the
+     surface line, and lets taps through to the sea */
+  .dive { position: relative; z-index: 6; height: 480vh; margin-top: -100svh; pointer-events: none; }
+  .dive-stage { position: sticky; top: 0; height: 100svh; }
+  .dive-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .leads { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .leads path { fill: none; stroke: var(--ink); stroke-width: 1; }
+  .leads circle { fill: var(--ink); opacity: 0; }
+  .tags .tag { position: absolute; left: 0; top: 0; opacity: 0; max-width: 15em; }
+  .tag .mono { font-size: 12px; color: var(--soft); }
+  .tag h3 { margin: 4px 0 6px; font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); font-size: clamp(24px, 2.6vw, 38px); line-height: 1; }
+  .tag p { margin: 0; font-size: 13px; line-height: 1.45; color: #2e2314; font-weight: 500; }
+  .tag .inci { font: italic 400 12px/1.4 'Geist', sans-serif; color: #4a3a26; margin-bottom: 2px; }
+  .dive-end { position: absolute; left: clamp(16px, 3vw, 40px); bottom: clamp(28px, 8vh, 72px); margin: 0; opacity: 0; }
+  .dive-end h2 { margin: 0 0 10px; font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); font-size: clamp(32px, 4.4vw, 64px); line-height: 0.95; }
+  .dive-end p { margin: 0 0 18px; font-size: 13px; color: #4a3a26; }
+  .dive-end .cta { display: inline-block; background: var(--ink); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-size: 14px; }
+
+  /* after the dive: where to buy it, and how to know the store is ours */
+  .buy { position: relative; z-index: 7; background: var(--paper); padding: clamp(72px, 12vh, 140px) clamp(16px, 3vw, 40px); }
+  .buy h2 { margin: 0 0 14px; font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); font-size: clamp(36px, 5vw, 72px); line-height: 0.95; }
+  .buy > p { margin: 0 0 40px; max-width: 34em; font-size: 15px; line-height: 1.55; color: var(--soft); }
+  .shops { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); border-top: 1px solid rgb(28 20 10 / 0.15); }
+  .shops a { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 22px 0; margin-right: 32px; border-bottom: 1px solid rgb(28 20 10 / 0.15); color: var(--ink); text-decoration: none; }
+  .shops strong { font-family: var(--display); font-weight: 600; font-size: 22px; }
+  .shops span { font: 400 12px/1.3 'Geist Mono', monospace; color: var(--soft); }
+
+  /* reduced motion: no sinking, no glide; the dive is one still frame after the sea */
+  @media (prefers-reduced-motion: reduce) {
+    .dive { margin-top: 0; height: 100svh; }
+    .dive-stage { position: relative; }
+  }
+  /* as a still, the five oils are named in a list beside the beads */
+  .dive.still .leads { display: none; }
+  .dive.still .tags { position: absolute; right: clamp(16px, 3vw, 40px); top: clamp(80px, 12vh, 120px); display: grid; gap: 16px; max-width: 17em; }
+  .dive.still .tag { position: static; opacity: 1 !important; transform: none !important; }
+  .dive.still .tag h3 { font-size: 24px; }
+  @media (max-width: 760px) {
+    .dive.still .tags { left: 16px; right: 16px; top: 72px; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+    .dive.still .tag h3 { font-size: 20px; }
+  }
+  /* without WebGL2 the dive is a plain amber field with the five oils listed */
+  .dive.no-gl .dive-stage { background: linear-gradient(#f7ddc0, #b98458); }
+  .dive.no-gl .tag { position: static; opacity: 1; margin: 0 0 18px clamp(16px, 3vw, 40px); }
+  .dive.no-gl .tags { padding-top: 18vh; }
+  .dive.no-gl .dive-end { opacity: 1; }
+
+  footer { padding: 64px clamp(16px, 3vw, 40px) 120px; font-size: 13px; color: var(--soft); }
+
+  @media (max-width: 760px) {
+    .bar nav a:not(.buy) { display: none; }
+    .say { left: 16px; right: 16px; top: 76px; display: block; }
+    .say h1 { margin-bottom: 8px; }
+    .say p { font-size: 13px; }
+    .o1 { left: 2%; top: 26%; font-size: calc(26vw * var(--d-scale) * 1.08); }
+    .o2 { left: 8%; top: 38%; font-size: calc(26vw * 30 / 52); }
+    .o3 { left: 30%; top: 47%; font-size: calc(26vw * 15 / 52); }
+    .o4 { left: 52%; top: 53%; font-size: calc(26vw * 2.5 / 52); }
+    .o5 { left: 63%; top: 56.5%; }
+    .oil small { font-size: 9px; }
+    .stand { left: 16px; right: 16px; bottom: 56px; justify-content: space-between; }
+    .hint { bottom: 104px; }
+  }
+</style>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+<body>
+<div class="sink">
+<section class="pool" id="hero">
+  <picture>
+    <source media="(max-aspect-ratio: 9/10)" srcset="img/sea/poster-macrob-tall-rose.webp">
+    <img class="still" src="img/sea/poster-macrob-wide-rose.webp" alt="A bottle of PERLE Drop Oil lying in a calm sea of peach oil under a white sky">
+  </picture>
+  <canvas aria-label="A sea of golden oil. Tap it to let a drop fall."></canvas>
+  <div class="intro" aria-hidden="true"><span class="intro-mark">PERLE</span><i class="intro-line"><b></b></i></div>
+  <div class="bar"><span class="name">PERLE</span><nav><a href="#">Ingredients</a><a href="#">Find yours</a><a class="buy" href="#">Where to buy</a></nav></div>
+  <div class="say">
+    <h1>What’s in a drop.</h1>
+    <p>Each oil is set at its share of the formula. Scroll to sink in and meet them one by one.</p>
+  </div>
+  <p class="oil o1">Squalane<small>52.0%</small></p>
+  <p class="oil o2">Rice bran oil<small>30.0%</small></p>
+  <p class="oil o3">Camellia seed oil<small>15.0%</small></p>
+  <p class="oil o4">Moringa seed oil<small>2.5%</small></p>
+  <p class="oil o5">Vitamin E<small>0.5%</small></p>
+  <p class="hint">Tap the oil for another drop</p>
+  <div class="stand"><span>Perle Drop Oil <span class="mono">30 ml · ฿1,190</span></span><a href="#">Where to buy</a></div>
+</section>
+<section class="dive" id="dive" aria-label="The five oils in a drop">
+  <div class="dive-stage">
+    <canvas aria-hidden="true"></canvas>
+    <svg class="leads" aria-hidden="true"></svg>
+    <div class="tags"></div>
+    <div class="dive-end"><h2>Five oils.<br>That’s the whole drop.</h2><p>Each bead is sized by its share of the formula. Shares are illustrative.</p><a class="cta" href="#buy">Where to buy</a></div>
+  </div>
+</section>
+</div>
+<section class="buy" id="buy">
+  <h2>Where to buy</h2>
+  <p>Perle is sold only through the stores below. Before you order, check that the store name matches exactly; anything else is not us.</p>
+  <ul class="shops">
+    <li><a href="#"><strong>Shopee</strong><span>PERLE Official Store · Shopee Mall</span></a></li>
+    <li><a href="#"><strong>Lazada</strong><span>PERLE Official · LazMall</span></a></li>
+    <li><a href="#"><strong>TikTok Shop</strong><span>@perle.official</span></a></li>
+  </ul>
+</section>
+<footer>PERLE is a fictional brand. A portfolio piece. Oil and drop rendered in Blender (Cycles); ripples drawn live in WebGL.</footer>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>

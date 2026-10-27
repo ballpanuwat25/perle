@@ -1,0 +1,17 @@
+# the exploration sketches, render caches and outputs stay on this machine
+design/
+
+# made by render/env_bake.py from the studio HDRI
+render/hdri/env-cards.exr
+render/hdri/env-cards.png
+
+# render outputs and logs (re-rendered on demand; finished images are copied into site/img)
+render/plates*/
+render/oils/
+render/dropper/
+render/round/
+*.log
+__pycache__/
+node_modules/
+.DS_Store
+Thumbs.db
