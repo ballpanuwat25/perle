@@ -1,0 +1,12 @@
+{
+  "name": "perle",
+  "private": true,
+  "description": "Runs the Next.js app in web/ from the repo root.",
+  "scripts": {
+    "postinstall": "npm --prefix web install",
+    "dev": "npm --prefix web run dev",
+    "build": "npm --prefix web run build",
+    "start": "npm --prefix web run start",
+    "lint": "npm --prefix web run lint"
+  }
+}
