@@ -54,15 +54,15 @@ html.naming .bar .name { opacity: 0; }
 .say p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--soft); max-width: 34em; }
 
 /* the cascade from C2: each oil at its share of the formula */
-.oil { position: absolute; z-index: 4; margin: 0; display: flex; align-items: baseline; gap: 0.12em; white-space: nowrap; pointer-events: none; transform-origin: 0 0;
+.oil { position: absolute; z-index: 4; margin: 0; display: flex; align-items: baseline; gap: clamp(3px, 0.02em, 8px); white-space: nowrap; pointer-events: none; transform-origin: 0 0;
   font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); line-height: var(--d-lead); }
 .oil small { font: 400 11px/1 var(--font-mono), ui-monospace, monospace; letter-spacing: 0; color: var(--soft); align-self: flex-start; margin-top: 0.1em; }
 .o1 { left: 1.6%; top: 19%; font-size: calc(17vw * var(--d-scale) * 1.08); }
 .o2 { left: 19%; top: 45%; font-size: calc(17vw * 30 / 52); }
 .o3 { left: 46%; top: 63%; font-size: calc(17vw * 15 / 52); }
-.o4 { left: 67%; top: 75.5%; font-size: calc(17vw * 2.5 / 52); }
-.o5 { left: 75%; top: 80.5%; font-size: max(3.5px, calc(17vw * 0.5 / 52)); }
-.o4 small, .o5 small { margin-left: 6px; }
+.o4 { left: 67%; top: 75.5%; font-size: max(20px, calc(17vw * 2.5 / 52)); }
+.o5 { left: 75%; top: 80.5%; font-size: max(15px, calc(17vw * 0.5 / 52)); }
+.o4 small, .o5 small { margin-left: 4px; }
 
 .stand { position: absolute; z-index: 5; right: clamp(16px, 3vw, 40px); bottom: 28px; display: flex; align-items: baseline; gap: 18px; font-size: 14px; cursor: auto; }
 .stand a { background: var(--ink); color: var(--paper); padding: 10px 16px; text-decoration: none; border-radius: 999px; }
@@ -123,12 +123,15 @@ footer { padding: 64px clamp(16px, 3vw, 40px) 120px; font-size: 13px; color: var
   .say { left: 16px; right: 16px; top: 76px; display: block; }
   .say h1 { margin-bottom: 8px; }
   .say p { font-size: 13px; }
-  .o1 { left: 2%; top: 26%; font-size: calc(26vw * var(--d-scale) * 1.08); }
-  .o2 { left: 8%; top: 38%; font-size: calc(26vw * 30 / 52); }
-  .o3 { left: 30%; top: 47%; font-size: calc(26vw * 15 / 52); }
-  .o4 { left: 52%; top: 53%; font-size: calc(26vw * 2.5 / 52); }
-  .o5 { left: 63%; top: 56.5%; }
+  .o1 { left: 2%; top: 26%; font-size: calc(22vw * var(--d-scale) * 1.08); }
+  .o2 { left: 8%; top: 37%; font-size: calc(22vw * 30 / 52); }
+  .o3 { left: 26%; top: 45%; font-size: calc(22vw * 15 / 52); }
+  .o4 { left: 40%; top: 51.5%; font-size: 16px; }
+  .o5 { left: 52%; top: 55.5%; font-size: 13px; }
   .oil small { font-size: 9px; }
-  .stand { left: 16px; right: 16px; bottom: 56px; justify-content: space-between; }
-  .hint { bottom: 104px; }
+  .stand { left: 16px; right: 16px; bottom: 16px; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; }
+  .stand > span { display: flex; flex-direction: column; gap: 3px; line-height: 1.2; }
+  .stand .mono { font-size: 12px; color: var(--soft); }
+  .stand a { white-space: nowrap; }
+  .hint { left: 16px; bottom: 70px; transform: none; white-space: nowrap; font-size: 11px; }
 }

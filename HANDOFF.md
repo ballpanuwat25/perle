@@ -43,7 +43,7 @@ Note: Next 16 has breaking changes; read `web/node_modules/next/dist/docs/` befo
 - **Where to buy + check a shop:** paste a shop link and see "official / not us".
 - **Footer:** "PERLE is fictional", a site-by credit, contact.
 - **404:** "This drop missed." on a still calm sea. **Favicon:** an amber bead (SVG, dark-tab variant).
-- **Bottom bar on short phones:** at 375×667 and 360×780, the price bar and tap hint cover the bottle label. Re-lay the bottom bar in Next.js.
+- ~~Bottom bar on short phones~~ done 2026-10-27: on phones the bar is one compact row (name over price, button right) at the bottom, the hint one line above it; the label is clear at 375×667, 360×780, 390×844. Type: % sits right against the word; Moringa and Vitamin E have a readable floor (20/15 px desktop, 16/13 px phone), so they are no longer strictly to scale (the % still gives the share).
 - **Type layout** is to be redone in Next.js (the user said so).
 - **Testing:** not yet on a real phone, especially two WebGL canvases at once in the TikTok/IG in-app browsers.
 

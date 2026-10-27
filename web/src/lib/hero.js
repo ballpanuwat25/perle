@@ -233,7 +233,8 @@ export function startHero() {
     } else sea.setDropper(null);
     sea.tick(dt, 0);
     still.style.opacity = 0;   // the live sea takes over from the still (a crossfade, see the CSS)
-    hint.style.opacity = 1 - clamp(scrollY / innerHeight * 4);
+    // (not while the intro plays: the hint comes in with the rest of the type)
+    hint.style.opacity = document.documentElement.classList.contains('loading') ? '' : 1 - clamp(scrollY / innerHeight * 4);
   }
 
   // The drop of the dive, its fall scrubbed by the scroll (t: 0 at the tip, 1 at the surface).
