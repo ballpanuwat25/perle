@@ -15,3 +15,6 @@ __pycache__/
 node_modules/
 .DS_Store
 Thumbs.db
+
+# the stills with the label laid on (render/ladder_stills.py); the finished cuts go to web/public/img/range
+render/stills/out/

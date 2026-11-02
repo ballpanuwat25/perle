@@ -1,0 +1,24 @@
+<!doctype html>
+<!-- The face of the PERLE label as it reads on a standing bottle (label.html turns it for the
+     bottle lying in the hero): ink on white, so its darkness is the ink's coverage.
+     ?what=DEW%20GEL sets the product line. Screenshot at 1200 x 640 (label_faces.mjs). -->
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1200px; height: 640px; background: #fff; overflow: hidden; }
+  .face { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #000; }
+  .name { font: 600 190px/1 'Funnel Display', sans-serif; letter-spacing: 0.2em; margin-right: -0.2em; }
+  .rule { width: 640px; height: 3px; background: #000; opacity: 0.8; margin: 54px 0 40px; }
+  .what { font: 500 52px/1 'Geist Mono', monospace; letter-spacing: 0.24em; margin-right: -0.24em; }
+  .size { font: 400 40px/1 'Geist Mono', monospace; letter-spacing: 0.18em; margin-right: -0.18em; opacity: 0.62; margin-top: 28px; }
+</style>
+<div class="face">
+  <div class="name">PERLE</div>
+  <div class="rule"></div>
+  <div class="what" id="what">DROP OIL</div>
+  <div class="size">30 ml · 1.0 fl oz</div>
+</div>
+<script>
+  const what = new URLSearchParams(location.search).get('what');
+  if (what) document.getElementById('what').textContent = what;
+</script>

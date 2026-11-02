@@ -1,7 +1,7 @@
 import { RANGE } from "@/lib/range";
 import s from "./Ladder.module.css";
 
-// The range, thin to rich: the order they go on in. Each still is a Blender render (to come).
+// The range, thin to rich: the order they go on in. Each still is a generated photo with the PERLE label laid on (render/ladder_stills.py).
 export function Ladder() {
   return (
     <section className={s.ladder} id="range" aria-labelledby="range-title">
@@ -13,9 +13,10 @@ export function Ladder() {
       <ol className={s.steps}>
         {RANGE.map((p) => (
           <li key={p.id} className={s.step} data-texture={p.id}>
-            <div className={s.still} role="img" aria-label={`${p.formula.product}, ${p.formula.size}`}>
-              <span className="mono">Still to render</span>
-            </div>
+            <picture className={s.still}>
+              <source media="(max-width: 860px)" srcSet={`/img/range/range-${p.id}-wide.webp`} />
+              <img src={`/img/range/range-${p.id}-tall.webp`} alt={`${p.formula.product}, ${p.formula.size}, beside a swatch of its texture`} loading="lazy" decoding="async" width={1100} height={1375} />
+            </picture>
             <p className={`mono ${s.meta}`}>Step {p.step} · {p.texture}</p>
             <h3>{p.formula.product}</h3>
             <p className={s.feel}>{p.feel}</p>
