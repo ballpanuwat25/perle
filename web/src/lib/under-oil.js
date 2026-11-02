@@ -6,7 +6,7 @@
 // and parts into the five oils of the formula, beads (Blender renders, one per oil, in an atlas)
 // sized by their shares. Scroll then glides the camera to one bead at a time, a leader line
 // naming each, and at the end they gather back into the one drop.
-//   mountDive(section, formula, { impact }) -> { tick(dt) -> { p, sink } }, or null
+//   mountDive(section, formula, { impact, glide }) -> { tick(dt) -> { p, sink } }, or null
 
 const clamp = (x) => Math.min(Math.max(x, 0), 1);
 const ease = (x) => x * x * (3 - 2 * x);
@@ -27,7 +27,7 @@ const NOTES = ['From olives', 'Pressed from the bran of rice', 'Pressed from cam
 // WALK: the five oils, one by one; MERGE: they gather back into the drop
 // (DROP starts a little way in, so the few px a smooth scroll leaves at the top start nothing)
 export const ACTS = { DROP: [0.012, 0.085], RISE: [0.085, 0.15], FALL: [0.125, 0.25], SPLIT: [0.23, 0.32], WALK: [0.34, 0.84], MERGE: [0.85, 0.93] };
-const { RISE, FALL, SPLIT, WALK, MERGE } = ACTS;
+const { DROP, RISE, FALL, SPLIT, WALK, MERGE } = ACTS;
 export const span = ([a, b], p) => clamp((p - a) / (b - a));
 
 const VS = `#version 300 es
@@ -140,7 +140,7 @@ void main(){
   o = vec4(col * a, a);
 }`;
 
-export async function mountDive(section, formula, { impact } = {}) {
+export async function mountDive(section, formula, { impact, glide = false } = {}) {
   const stage = section.querySelector('.dive-stage');
   const canvas = stage.querySelector('canvas');
   const gl = canvas.getContext('webgl2', { premultipliedAlpha: true, antialias: false });
@@ -192,8 +192,10 @@ export async function mountDive(section, formula, { impact } = {}) {
   const tagEls = [...tags.children], paths = [...leads.querySelectorAll('path')], dots = [...leads.querySelectorAll('circle')];
   const end = stage.querySelector('.dive-end');
 
-  let W = 0, H = 0, dpr = 1;
+  // under: how much of the stage the browser's toolbar can cover at the bottom (see --under)
+  let W = 0, H = 0, dpr = 1, under = 0;
   function resize() {
+    under = parseFloat(getComputedStyle(stage).getPropertyValue('--under')) || 0;
     dpr = Math.min(devicePixelRatio, 1.75);
     W = stage.clientWidth; H = stage.clientHeight;
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
@@ -224,7 +226,7 @@ export async function mountDive(section, formula, { impact } = {}) {
         : [Math.min(Math.max(p2[0] - tw / 2, 12), W - 12 - tw), dy > 0 ? p2[1] + 8 : p2[1] - 8 - th];
       let cost = run * 2;
       // off the stage, or under the review panel's corner, is worst
-      if (box[0] < 12 || box[0] + tw > W - 12 || box[1] < 70 || box[1] + th > H - 60) cost += 1e6;
+      if (box[0] < 12 || box[0] + tw > W - 12 || box[1] < 70 || box[1] + th > H - under - 60) cost += 1e6;
       others.forEach((o) => {
         const cx = Math.max(box[0], Math.min(o.x, box[0] + tw)), cy = Math.max(box[1], Math.min(o.y, box[1] + th));
         const d = Math.hypot(o.x - cx, o.y - cy);
@@ -235,10 +237,20 @@ export async function mountDive(section, formula, { impact } = {}) {
     return best;
   }
 
+  // With glide (touch, where no smooth scroll runs) a flick crosses the fall and the plunge in a
+  // frame or two, so the drop is never seen to fall: there the story follows the scroll closely,
+  // but takes at least 1.3 s over those two acts, then catches up.
+  let p = null;
   function tick(dt) {
     const sr = section.getBoundingClientRect();
     // with reduced motion the section is a still: everything shown at once, nothing moving
-    const p = reduce ? 1 : clamp(-sr.top / Math.max(1, sr.height - innerHeight));
+    const at = reduce ? 1 : clamp(-sr.top / Math.max(1, sr.height - H));
+    if (!glide || p === null) p = at;
+    else {
+      const step = (at - p) * (1 - Math.exp(-dt * 12));
+      const most = Math.min(p, at) < RISE[1] ? ((RISE[1] - DROP[0]) / 1.3) * dt : Infinity;
+      p += Math.sign(step) * Math.min(Math.abs(step), most);
+    }
     clock += reduce ? 0 : dt;
     // the moment the drop lands the surface sweeps up past us: we go under with it
     const sink = reduce ? 1 : span(RISE, p);

@@ -17,9 +17,15 @@ button { font: inherit; color: inherit; }
 body { background: var(--paper); color: var(--ink); font-family: var(--font-sans), system-ui, sans-serif; }
 .mono { font-family: var(--font-mono), ui-monospace, monospace; }
 
+/* The hero and the dive fill the screen at its tallest (lvh: the browser's toolbar hidden), so no
+   page shows under them when a phone's toolbar slides away. What must stay in sight sits on the
+   small viewport (svh), clear of the --under strip the toolbar covers while it shows. */
+@property --under { syntax: '<length>'; inherits: true; initial-value: 0px; }
+:root { --under: calc(100lvh - 100svh); }
+
 /* the hero holds still while the dive section rises over it */
 .sink { position: relative; }
-.pool { position: sticky; top: 0; height: 100svh; overflow: hidden; background: var(--paper); user-select: none; -webkit-user-select: none; touch-action: pan-y; cursor: pointer; }
+.pool { position: sticky; top: 0; height: 100lvh; overflow: hidden; background: var(--paper); user-select: none; -webkit-user-select: none; touch-action: pan-y; cursor: pointer; }
 /* the Blender plate is the still: it shows at once and stays if WebGL is missing */
 .pool .still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; transition: opacity 0.6s; visibility: hidden; }
 .pool .still.placed { visibility: visible; }   /* shown once shifted to where the live sea will be */
@@ -37,7 +43,7 @@ html.loading .say, html.loading .oil, html.loading .bar nav, html.loading .stand
 html.loading .bar, html.naming .bar .name { background-color: transparent; border-color: transparent; box-shadow: none; }
 .bar { transition: background-color 0.6s, border-color 0.6s, box-shadow 0.6s; }
 html.naming .bar .name { opacity: 0; }
-.intro { position: absolute; inset: 0; z-index: 9; display: grid; place-items: center; pointer-events: none; }
+.intro { position: absolute; inset: 0 0 var(--under); z-index: 9; display: grid; place-items: center; pointer-events: none; }
 .intro-mark { font-family: var(--display); font-weight: 600; letter-spacing: 0.32em; margin-right: -0.32em; font-size: clamp(44px, 7vw, 104px); line-height: 1; color: var(--ink); transform-origin: 0 0; transition: transform 0.95s cubic-bezier(0.65, 0, 0.2, 1); }
 .intro-line { position: absolute; left: 50%; top: calc(50% + clamp(44px, 5.4vw, 80px)); width: clamp(120px, 14vw, 200px); height: 1px; translate: -50% 0; background: rgb(28 20 10 / 0.14); overflow: hidden; transition: opacity 0.3s; }
 .intro-line b { display: block; height: 100%; background: var(--ink); transform-origin: 0 50%; transform: scaleX(0); transition: transform 1.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
@@ -51,7 +57,7 @@ html.naming .bar .name { opacity: 0; }
 .bar a { text-decoration: none; }
 .bar .buy { background: var(--ink); color: var(--paper); border-radius: 999px; padding: 9px 17px; }
 
-.say { position: absolute; z-index: 4; left: clamp(16px, 3vw, 40px); top: max(9%, 76px); display: flex; align-items: baseline; gap: 28px; pointer-events: none; }
+.say { position: absolute; z-index: 4; left: clamp(16px, 3vw, 40px); top: max(9svh, 76px); display: flex; align-items: baseline; gap: 28px; pointer-events: none; }
 .say h1 { font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); font-size: 34px; line-height: 0.95; margin: 0; white-space: nowrap; }
 .say p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--soft); max-width: 34em; }
 
@@ -61,22 +67,22 @@ html.naming .bar .name { opacity: 0; }
 /* the % tucks in after the last letter, its top level with that letter's top (--top: its height
    over the baseline, set per oil by <Hero>; Geist Mono digits stand 0.734 of their size) */
 .oil small { font: 400 11px/1 var(--font-mono), ui-monospace, monospace; letter-spacing: 0; color: var(--soft); align-self: baseline; translate: 0 calc(0.734em - var(--top, 0.516) * var(--fs)); }
-.o1 { left: 1.6%; top: max(19%, 136px); --fs: calc(17vw * var(--d-scale) * 1.08); font-size: var(--fs); }
-.o2 { left: 19%; top: 45%; --fs: calc(17vw * 30 / 52); font-size: var(--fs); }
-.o3 { left: 46%; top: 63%; --fs: calc(17vw * 15 / 52); font-size: var(--fs); }
-.o4 { left: 67%; top: 75.5%; --fs: max(20px, calc(17vw * 2.5 / 52)); font-size: var(--fs); }
-.o5 { left: 75%; top: 80.5%; --fs: max(15px, calc(17vw * 0.5 / 52)); font-size: var(--fs); }
+.o1 { left: 1.6%; top: max(19svh, 136px); --fs: calc(17vw * var(--d-scale) * 1.08); font-size: var(--fs); }
+.o2 { left: 19%; top: 45svh; --fs: calc(17vw * 30 / 52); font-size: var(--fs); }
+.o3 { left: 46%; top: 63svh; --fs: calc(17vw * 15 / 52); font-size: var(--fs); }
+.o4 { left: 67%; top: 75.5svh; --fs: max(20px, calc(17vw * 2.5 / 52)); font-size: var(--fs); }
+.o5 { left: 75%; top: 80.5svh; --fs: max(15px, calc(17vw * 0.5 / 52)); font-size: var(--fs); }
 .o4 small, .o5 small { margin-left: 4px; }
 
-.stand { position: absolute; z-index: 5; right: clamp(16px, 3vw, 40px); bottom: 28px; display: flex; align-items: baseline; gap: 18px; font-size: 14px; cursor: auto; }
+.stand { position: absolute; z-index: 5; right: clamp(16px, 3vw, 40px); bottom: calc(28px + var(--under)); display: flex; align-items: baseline; gap: 18px; font-size: 14px; cursor: auto; }
 .stand a { background: var(--ink); color: var(--paper); padding: 10px 16px; text-decoration: none; border-radius: 999px; }
-.hint { position: absolute; z-index: 4; left: 50%; bottom: 30px; transform: translateX(-50%); margin: 0; font: 400 12px/1 var(--font-mono), ui-monospace, monospace; color: var(--soft); pointer-events: none; transition: opacity 0.4s; }
+.hint { position: absolute; z-index: 4; left: 50%; bottom: calc(30px + var(--under)); transform: translateX(-50%); margin: 0; font: 400 12px/1 var(--font-mono), ui-monospace, monospace; color: var(--soft); pointer-events: none; transition: opacity 0.4s; }
 
 /* below the surface: the stage sticks while the five oils are walked through */
 /* the stage lies over the hero from the first pixel of scroll: it draws nothing above the
    surface line, and lets taps through to the sea */
-.dive { position: relative; z-index: 6; height: 480vh; margin-top: -100svh; pointer-events: none; }
-.dive-stage { position: sticky; top: 0; height: 100svh; overflow: clip; }   /* (tags and leads of oils far off camera stay out of the page's width) */
+.dive { position: relative; z-index: 6; height: 480vh; margin-top: -100lvh; pointer-events: none; }
+.dive-stage { position: sticky; top: 0; height: 100lvh; overflow: clip; }   /* (tags and leads of oils far off camera stay out of the page's width) */
 .dive-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .leads { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .leads path { fill: none; stroke: var(--ink); stroke-width: 1; }
@@ -86,7 +92,7 @@ html.naming .bar .name { opacity: 0; }
 .tag h3 { margin: 4px 0 6px; font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); font-size: clamp(24px, 2.6vw, 38px); line-height: 1; }
 .tag p { margin: 0; font-size: 13px; line-height: 1.45; color: #2e2314; font-weight: 500; }
 .tag .inci { font: italic 400 12px/1.4 var(--font-sans), system-ui, sans-serif; color: #4a3a26; margin-bottom: 2px; }
-.dive-end { position: absolute; left: clamp(16px, 3vw, 40px); bottom: clamp(28px, 8vh, 72px); margin: 0; opacity: 0; }
+.dive-end { position: absolute; left: clamp(16px, 3vw, 40px); bottom: calc(clamp(28px, 8svh, 72px) + var(--under)); margin: 0; opacity: 0; }
 .dive-end h2 { margin: 0 0 10px; font-family: var(--display); font-weight: var(--d-weight); font-stretch: var(--d-stretch); letter-spacing: var(--d-track); font-size: clamp(32px, 4.4vw, 64px); line-height: 0.95; }
 .dive-end p { margin: 0 0 18px; font-size: 13px; color: #4a3a26; }
 .dive-end .cta { display: inline-block; background: var(--ink); color: var(--paper); padding: 11px 20px; border-radius: 999px; text-decoration: none; font-size: 14px; }
@@ -118,17 +124,17 @@ html.naming .bar .name { opacity: 0; }
   .say { left: 16px; right: 16px; top: 76px; display: block; }
   .say h1 { margin-bottom: 8px; }
   .say p { font-size: 13px; }
-  .o1 { left: 2%; top: 26%; --fs: calc(22vw * var(--d-scale) * 1.08); font-size: var(--fs); }
-  .o2 { left: 8%; top: 37%; --fs: calc(22vw * 30 / 52); font-size: var(--fs); }
-  .o3 { left: 26%; top: 45%; --fs: calc(22vw * 15 / 52); font-size: var(--fs); }
-  .o4 { left: 40%; top: 51.5%; --fs: 16px; font-size: var(--fs); }
-  .o5 { left: 52%; top: 55.5%; --fs: 13px; font-size: var(--fs); }
+  .o1 { left: 2%; top: 26svh; --fs: calc(22vw * var(--d-scale) * 1.08); font-size: var(--fs); }
+  .o2 { left: 8%; top: 37svh; --fs: calc(22vw * 30 / 52); font-size: var(--fs); }
+  .o3 { left: 26%; top: 45svh; --fs: calc(22vw * 15 / 52); font-size: var(--fs); }
+  .o4 { left: 40%; top: 51.5svh; --fs: 16px; font-size: var(--fs); }
+  .o5 { left: 52%; top: 55.5svh; --fs: 13px; font-size: var(--fs); }
   .oil small { font-size: 9px; }
-  .stand { left: 16px; right: 16px; bottom: 16px; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; }
+  .stand { left: 16px; right: 16px; bottom: calc(16px + var(--under)); justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; }
   .stand > span { display: flex; flex-direction: column; gap: 3px; line-height: 1.2; }
   .stand .mono { font-size: 12px; color: var(--soft); }
   .stand a { white-space: nowrap; }
-  .hint { left: 16px; bottom: 70px; transform: none; white-space: nowrap; font-size: 11px; }
+  .hint { left: 16px; bottom: calc(70px + var(--under)); transform: none; white-space: nowrap; font-size: 11px; }
 }
 
 /* for screen readers only */

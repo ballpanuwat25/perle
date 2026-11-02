@@ -105,7 +105,9 @@ export function startHero() {
     const target = (say.getBoundingClientRect().bottom - hero.getBoundingClientRect().top + 28) / H;
     let dy = Math.max(0, target - horizonOf(cam, pa)), dx = 0;
     if (view.box) {
-      const [x0, , x1, y1] = view.box, side = 0.03, foot = (hero.querySelector('.stand').offsetHeight + 44) / H;
+      // (the price bar sits above the part of the screen the browser's toolbar can cover)
+      const under = parseFloat(getComputedStyle(hero).getPropertyValue('--under')) || 0;
+      const [x0, , x1, y1] = view.box, side = 0.03, foot = (hero.querySelector('.stand').offsetHeight + 44 + under) / H;
       const sx0 = (x0 - 0.5) / kx + 0.5, sx1 = (x1 - 0.5) / kx + 0.5;
       if (sx0 < side) dx = sx0 - side;
       else if (sx1 > 1 - side) dx = sx1 - (1 - side);
@@ -289,7 +291,7 @@ export function startHero() {
 
   // the hero stays put (sticky) while the dive section rises over it: we sink into the oil
   const diveEl = document.querySelector('#dive');
-  mountDive(diveEl, DROP_OIL, { impact: () => shot }).then((d) => { dive = d; });
+  mountDive(diveEl, DROP_OIL, { impact: () => shot, glide: !lenis && !reduceMotion }).then((d) => { dive = d; });
 
   // Among the oils the wheel steps from one to the next like slides: the first turn of a gesture
   // sends the page on to the next oil in that direction, tag fully drawn, as one continuous glide
